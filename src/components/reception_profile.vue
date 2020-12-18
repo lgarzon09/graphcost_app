@@ -208,7 +208,7 @@
 		},
 		methods: {
 			setTypeRoomOptions() {
-				axios.get("http://127.0.0.1:8000/rooms/")
+				axios.get("https://graphcostapp.herokuapp.com/rooms/")
 				.then((result) => {
 					for (let room of result.data) {
 						this.optionsTypeRoom.push({
@@ -234,7 +234,7 @@
 
 					let setRooms = new Set(this.occupiedRooms);
 
-					axios.get("http://127.0.0.1:8000/rooms/" + this.typeRoom)
+					axios.get("https://graphcostapp.herokuapp.com/rooms/" + this.typeRoom)
 					.then((result) => {
 						this.habDisponibles = 0;
 						let totalRooms = result.data.roo_total;
@@ -256,7 +256,7 @@
 				}
 			},
 			findBookingsActive() {
-				axios.get(`http://127.0.0.1:8000/bookings/?dateIn=${this.dateIn}&dateOut=${this.dateOut}`)
+				axios.get(`https://graphcostapp.herokuapp.com/bookings/?dateIn=${this.dateIn}&dateOut=${this.dateOut}`)
 				.then((result) => {
 					this.bookingsActive = this.bookingsActive.concat(result.data.flat());
 					this.chooseRoom = "";
@@ -272,7 +272,7 @@
 				}
 
 				if (this.clientCC.length >= 7) {
-					axios.get("http://127.0.0.1:8000/clients/" + this.clientCC)
+					axios.get("https://graphcostapp.herokuapp.com/clients/" + this.clientCC)
 					.then((result) => {
 						this.clientName = result.data.cli_name;
 						this.clientID = result.data.cli_id;
@@ -295,7 +295,7 @@
 					cli_docNumber: this.clientCC
 				}
 				
-				axios.post("http://127.0.0.1:8000/clients/new/", JSON.stringify(form), {headers: {'Content-Type': 'application/json'}})
+				axios.post("https://graphcostapp.herokuapp.com/clients/new/", JSON.stringify(form), {headers: {'Content-Type': 'application/json'}})
 				.then((result) => {
 					this.descRegister = "Registro exitoso.";
 					this.clientID = result.data.cli_id;
@@ -317,7 +317,7 @@
 					boo_price_charged: 0
 				}
 
-				axios.post("http://127.0.0.1:8000/bookings/price/", JSON.stringify(form), {headers: {'Content-Type': 'application/json'}})
+				axios.post("https://graphcostapp.herokuapp.com/bookings/price/", JSON.stringify(form), {headers: {'Content-Type': 'application/json'}})
 				.then((result) => {
 					this.costCharged = result.data;
 					// this.$bvModal.show("modal-scoped");
@@ -340,7 +340,7 @@
 						boo_price_charged: this.costCharged
 					}
 
-					axios.post("http://127.0.0.1:8000/bookings/new/", JSON.stringify(form), {headers: {'Content-Type': 'application/json'}})
+					axios.post("https://graphcostapp.herokuapp.com/bookings/new/", JSON.stringify(form), {headers: {'Content-Type': 'application/json'}})
 					.then((result) => {
 						this.descRegister = "";
 						this.$bvModal.show("modal-scoped");
