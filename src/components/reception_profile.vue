@@ -258,7 +258,7 @@
 			findBookingsActive() {
 				axios.get(`https://graphcostapp.herokuapp.com/bookings/?dateIn=${this.dateIn}&dateOut=${this.dateOut}`)
 				.then((result) => {
-					this.bookingsActive = this.bookingsActive.concat(result.data.flat());
+					this.bookingsActive = this.bookingsActive.concat(...resul.data);
 					this.chooseRoom = "";
 				})
 				.catch((error) => {
