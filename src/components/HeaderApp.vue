@@ -1,6 +1,10 @@
 <template>
 	<div id="image-reception">
-	    <h4 id="logo-name" class="font-weight-bolder">{{title}}</h4>
+	    <!-- <h4 id="logo-name" class="font-weight-bolder">{{title}}</h4> -->
+        <div id="logoGC">
+            <b-img id="logo-leyend" :src="require('../assets/LogoW.png')" style="max-width: 125px;" fluid alt="Responsive image"></b-img>
+            <b-img id="only-logo" :src="require('../assets/LogoGCW.png')" style="max-width: 60px;" fluid alt="Responsive image"></b-img>
+        </div>
 	    <div id="avatar">
 	    	<b-avatar variant="light" :src="require('../assets/imageUser.jpg')" size="9rem" style="padding: 7px;"></b-avatar>
 	    </div>
@@ -23,11 +27,11 @@
 </script>
 
 <style>
-    h4#logo-name {
-    	padding-top: 45px;
-    	padding-right: 80px;
-    	text-align: right;
-    	color: white;
+    #logoGC {
+        padding-top: 35px;
+        padding-right: 45px;
+        display: flex;
+        justify-content: flex-end;
     }
 
     h4#name-receptionist {
@@ -48,6 +52,7 @@
     	width: 100%;
     	display: flex;
     	justify-content: center;
+        margin-top: -10px;
     }
 
     #image-reception{
@@ -61,5 +66,19 @@
         background-position: center;
         position: relative;
         z-index: 1;
+    }
+
+    #only-logo {
+        display: none;
+    }
+
+    @media screen and (max-width: 768px) {
+        #only-logo {
+            display: block;
+        }
+
+        #logo-leyend {
+            display: none;
+        }
     }
 </style>
