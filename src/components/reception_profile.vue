@@ -39,10 +39,15 @@
 							<b-form-group label="Precio de reserva" label-for="input-1" class="mb-1">
 								<b-form-input id="input-3" type="text" readonly v-model="costCharged"></b-form-input>
 							</b-form-group>
+							<!-- <p style="color: #ee5253"><small>{{costCharged}}</small></p> -->
+
+
+							<!-- <b-icon icon="search" style="color: #7952b3;"></b-icon> -->
 						</b-form>
 
 						<div style="text-align: center">
 							<b-button id="btn_res" class="font-weight-bolder text-white" type="submit">Reservar</b-button>
+							<!-- <b-button id="btn_res" class="font-weight-bolder text-white" type="reset">Resetear</b-button> -->
 						</div>
 						
 					</b-form>
@@ -58,7 +63,7 @@
 									<h5 class="mr-2">Cliente: </h5>
 									<p class="mb-1" style="margin-top: 2px;">{{clientName}}</p>
 								</div>
-								<b-img src="https://www.cataloniahotels.com/es/blog/wp-content/uploads/2016/05/habitaci%C3%B3n-doble-catalonia-620x412.jpg" alt="Room" fluid style="max-width: 300px; border-radius: 20px;" class="mb-3"></b-img>
+								<b-img src="confirmR.jpg" alt="Room" fluid style="max-width: 300px; border-radius: 20px;" class="mb-3"></b-img>
 							</div>
 							<div class="pl-5 pr-4 mb-4">
 								<h5>Precio a pagar:</h5>
@@ -199,7 +204,12 @@
 		},
 		methods: {
 			setTypeRoomOptions() {
-				axios.get("https://graphcode-api.herokuapp.com/rooms/", { headers: {} })
+				axios.get("https://graphcode-api.herokuapp.com/rooms/", { headers: {
+					"Access-Control-Allow-Origin": "https://graphcode-api.herokuapp.com/",
+					"Access-Control-Allow-Methods": "GET",
+					"Access-Control-Allow-Headers": "Content-Type",
+					"Access-Control-Max-Age": 86400
+				} })
 				.then((result) => {
 					for (let room of result.data) {
 						this.optionsTypeRoom.push({
@@ -225,7 +235,12 @@
 
 					let setRooms = new Set(this.occupiedRooms);
 
-					axios.get("https://graphcode-api.herokuapp.com/rooms/" + this.typeRoom, { headers: {} })
+					axios.get("https://graphcode-api.herokuapp.com/rooms/" + this.typeRoom, { headers: {
+							"Access-Control-Allow-Origin": "https://graphcode-api.herokuapp.com/",
+							"Access-Control-Allow-Methods": "GET",
+							"Access-Control-Allow-Headers": "Content-Type",
+							"Access-Control-Max-Age": 86400
+						} })
 					.then((result) => {
 						this.habDisponibles = 0;
 						let totalRooms = result.data.roo_total;
@@ -247,11 +262,17 @@
 				}
 			},
 			findBookingsActive() {
-				axios.get(`https://graphcode-api.herokuapp.com/bookings/?dateIn=${this.dateIn}&dateOut=${this.dateOut}`, { headers: {} })
+				axios.get(`https://graphcode-api.herokuapp.com/bookings/?dateIn=${this.dateIn}&dateOut=${this.dateOut}`, {
+					headers: {
+						"Access-Control-Allow-Origin": "https://graphcode-api.herokuapp.com/",
+						"Access-Control-Allow-Methods": "GET",
+						"Access-Control-Allow-Headers": "Content-Type",
+						"Access-Control-Max-Age": 86400
+					}
+				})
 				.then((result) => {
 					this.bookingsActive = this.bookingsActive.concat(...result.data);
 					this.chooseRoom = "";
-					console.log(this.bookingsActive);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -267,7 +288,14 @@
 				}
 
 				if (this.clientCC.length >= 7) {
-					axios.get("https://graphcode-api.herokuapp.com/clients/" + this.clientCC, {headers: {} })
+					axios.get("https://graphcode-api.herokuapp.com/clients/" + this.clientCC, {
+						headers: {
+							"Access-Control-Allow-Origin": "https://graphcode-api.herokuapp.com/",
+							"Access-Control-Allow-Methods": "GET",
+							"Access-Control-Allow-Headers": "Content-Type",
+							"Access-Control-Max-Age": 86400
+						}
+					})
 					.then((result) => {
 						this.clientName = result.data.cli_name;
 						this.clientID = result.data.cli_id;
@@ -292,7 +320,14 @@
 					cli_docNumber: this.clientCC
 				}
 				
-				axios.post("https://graphcode-api.herokuapp.com/clients/new/", JSON.stringify(form), { headers: {} })
+				axios.post("https://graphcode-api.herokuapp.com/clients/new/", JSON.stringify(form), {
+					headers: {
+						"Access-Control-Allow-Origin": "https://graphcode-api.herokuapp.com/",
+						"Access-Control-Allow-Methods": "GET",
+						"Access-Control-Allow-Headers": "Content-Type",
+						"Access-Control-Max-Age": 86400
+					}
+				})
 				.then((result) => {
 					this.descRegister = "Registro exitoso.";
 					this.clientID = result.data.cli_id;
@@ -315,9 +350,17 @@
 					boo_price_charged: 0
 				}
 
-				axios.post("https://graphcode-api.herokuapp.com/bookings/price/", JSON.stringify(form), { headers: {} })
+				axios.post("https://graphcode-api.herokuapp.com/bookings/price/", JSON.stringify(form), {
+					headers: {
+						"Access-Control-Allow-Origin": "https://graphcode-api.herokuapp.com/",
+						"Access-Control-Allow-Methods": "GET",
+						"Access-Control-Allow-Headers": "Content-Type",
+						"Access-Control-Max-Age": 86400
+					}
+				})
 				.then((result) => {
 					this.costCharged = result.data;
+					// this.$bvModal.show("modal-scoped");
 				})
 				.catch((error) => {
 					console.log(error)
@@ -337,7 +380,14 @@
 						boo_price_charged: this.costCharged
 					}
 
-					axios.post("https://graphcode-api.herokuapp.com/bookings/new/", JSON.stringify(form), { headers: {} })
+					axios.post("https://graphcode-api.herokuapp.com/bookings/new/", JSON.stringify(form), {
+						headers: {
+							"Access-Control-Allow-Origin": "https://graphcode-api.herokuapp.com/",
+							"Access-Control-Allow-Methods": "GET",
+							"Access-Control-Allow-Headers": "Content-Type",
+							"Access-Control-Max-Age": 86400
+						}
+					})
 					.then((result) => {
 						this.descRegister = "";
 						this.$bvModal.show("modal-scoped");
